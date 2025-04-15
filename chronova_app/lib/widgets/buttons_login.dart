@@ -9,7 +9,7 @@ class ThemeButtonStyle extends StatelessWidget {
     
   });
 
-  final Widget text;
+  final String text;
   final void Function() onPressed;
   final Widget? icon;
 
@@ -20,7 +20,9 @@ class ThemeButtonStyle extends StatelessWidget {
                     icon: icon,
                     label: Container(
                       padding: const EdgeInsets.all(10),
-                      child: text,
+                      child: Text(text, style: TextStyle(
+                        color: Colors.white
+                      ),),
                     ),
                     style: FilledButton.styleFrom(
                       backgroundColor: Colors.deepPurpleAccent,
