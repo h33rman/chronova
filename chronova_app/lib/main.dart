@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 void main()
 {
   runApp(MaterialApp(
-    color:const Color.fromARGB(255, 109, 108, 129),
     home: BottomBarMenu(),
   ));
 }

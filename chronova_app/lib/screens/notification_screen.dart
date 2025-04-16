@@ -7,12 +7,15 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Notifications"),
+        title: const Text("Notifications", style: TextStyle(color: Colors.white)),
         backgroundColor: const Color(0xFF222142),
       ),
-      body: const Center(
-        child: Text("Welcome to the Notification Screen!", style: TextStyle(fontSize: 18)),
+      body: Container(
+        color: const Color(0xFF28264F), // Full body background color
+        child: const Center(
+          // Center the text in the middle of the screen  
+        child: Text("Welcome to the Notification Screen!", style: TextStyle(color: Colors.white, fontSize: 18)),
       ),
-    );
+    ));
   }
 }
