@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key});
+  const HomeScreen({super.key});
 
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -93,13 +91,16 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildGameCard(BuildContext context, String title, String imagePath) {
     return Container(
-      height: 230,
+      height: 250,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         image: DecorationImage(
           image: AssetImage(imagePath),
+          scale: .8,
           fit: BoxFit.cover,
-          alignment: Alignment.topCenter
+          //alignment: Alignment.center,
+          // Zoom
+          
         ),
       ),
       child: Padding(
