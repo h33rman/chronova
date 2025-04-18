@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key});
 
+
+  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,14 +37,14 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        height: 200,
+                        height: 250,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           color: const Color(0xFF3A3861),
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 30),
                       Center(
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -96,6 +99,7 @@ class HomeScreen extends StatelessWidget {
         image: DecorationImage(
           image: AssetImage(imagePath),
           fit: BoxFit.cover,
+          alignment: Alignment.topCenter
         ),
       ),
       child: Padding(
@@ -113,9 +117,14 @@ class HomeScreen extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 ),
                 onPressed: (){}, 
-                label: Text(title, style: const TextStyle(color: Colors.white, fontSize: 12)),
+                label: Text(title, style: const TextStyle(
+                  color: Colors.white, 
+                  fontSize: 12, 
+                  letterSpacing: 1.2, 
+                  fontWeight: FontWeight.bold)),
                 icon: const Icon(Icons.videogame_asset_outlined, color: Colors.white, size: 24),
-        )
+        ),
+            const SizedBox(height: 5)
         ],
         ),
       ),
