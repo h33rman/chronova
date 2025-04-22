@@ -1,3 +1,4 @@
+import 'package:chronova_app/widgets/offline_popup.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -8,6 +9,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 100,
         backgroundColor: const Color(0xFF222142),
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -98,9 +100,6 @@ class HomeScreen extends StatelessWidget {
           image: AssetImage(imagePath),
           scale: .8,
           fit: BoxFit.cover,
-          //alignment: Alignment.center,
-          // Zoom
-          
         ),
       ),
       child: Padding(
@@ -109,26 +108,48 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.deepPurple,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.deepPurple,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
                 ),
-                onPressed: (){}, 
-                label: Text(title, style: const TextStyle(
-                  color: Colors.white, 
-                  fontSize: 12, 
-                  letterSpacing: 1.2, 
-                  fontWeight: FontWeight.bold)),
-                icon: const Icon(Icons.videogame_asset_outlined, color: Colors.white, size: 24),
-        ),
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              ),
+              onPressed: () {
+                if (title == "Play Offline") {
+                  _showPlayOfflinePopup(context); // Show the pop-up
+                } else if (title == "Play Online") {
+                  _showPlayOfflinePopup(context); // Replace
+                }
+              },
+              label: Text(title,
+                  style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      letterSpacing: 1.2,
+                      fontWeight: FontWeight.bold)),
+              icon: const Icon(Icons.videogame_asset_outlined,
+                  color: Colors.white, size: 24),
+            ),
             const SizedBox(height: 5)
-        ],
+          ],
         ),
       ),
+    );
+  }
+
+  // Function to show the Play Offline options as a bottom sheet
+  void _showPlayOfflinePopup(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: const Color(0xFF3A3861), // Background color of the bottom sheet
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (BuildContext bc) {
+        return const PlayOfflinePopup(); // Use the new widget
+      },
     );
   }
 }

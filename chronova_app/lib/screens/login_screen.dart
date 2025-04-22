@@ -1,4 +1,4 @@
-import 'package:chronova_app/screens/home_screen.dart';
+import 'package:chronova_app/widgets/home_bar.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -94,7 +94,7 @@ class LoginScreen extends StatelessWidget {
                     // Implement login logic
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(builder: (context) => const HomeScreen()), // Replace with your home screen
+                      MaterialPageRoute(builder: (context) => const BottomBarMenu()), // Replace with your home screen
                     );
                   },
                   style: FilledButton.styleFrom(
