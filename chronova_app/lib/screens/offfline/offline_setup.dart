@@ -30,24 +30,24 @@ class _OfflineSetupState extends State<OfflineSetup> {
   // Level of the bots
   void increaseLevel (){
     setState(() {
-      levelBots = levelBots <4 ?  levelBots+1 : 1;
+      levelBots = levelBots <3 ?  levelBots+1 : 1;
     });
   }
   void  decreaseLevel(){
     setState(() {
-      levelBots = levelBots > 1 ?  levelBots-1 : 4;
+      levelBots = levelBots > 1 ?  levelBots-1 : 3;
     });
   }
 
   // Game Difficulty
   void increaseDifficulty (){
     setState(() {
-      gameDifficulty = gameDifficulty <4  ? gameDifficulty+1 : 1;
+      gameDifficulty = gameDifficulty <3  ? gameDifficulty+1 : 1;
     });
   }
   void decreaseDifficulty () {
     setState(() {
-      gameDifficulty = gameDifficulty > 1 ? gameDifficulty-1 : 4;
+      gameDifficulty = gameDifficulty > 1 ? gameDifficulty-1 : 3;
     });
   }
 

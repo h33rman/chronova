@@ -1,4 +1,4 @@
-import 'package:chronova_app/screens/offline_setup.dart';
+import 'package:chronova_app/screens/offfline/offline_setup.dart';
 import 'package:flutter/material.dart';
 
 class PlayOfflinePopup extends StatelessWidget {
