@@ -1,5 +1,6 @@
-import 'package:chronova_app/widgets/offline_popup.dart';
 import 'package:flutter/material.dart';
+
+import '../models/on_game.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -26,7 +27,13 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: Container(
-        color: const Color(0xFF28264F),
+        // Image as background
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/img/chronova_bg.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: Column( // Use Column to fill the screen
           children: [
             Expanded( // Expanded to take remaining space
@@ -36,32 +43,6 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
-                        height: 250,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF3A3861),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                      const SizedBox(height: 30),
-                      Center(
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: List.generate(
-                            4,
-                            (index) => Container(
-                              margin: const EdgeInsets.symmetric(horizontal: 4),
-                              width: 6,
-                              height: 6,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white38,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
                       const SizedBox(height: 30),
                       Container(
                         alignment: Alignment.center,
@@ -74,9 +55,9 @@ class HomeScreen extends StatelessWidget {
                           ),)),),
                       const SizedBox(height: 20),
                       Row(
+                        spacing: 10,
                         children: [
                           Expanded(child: _buildGameCard(context, "Play Offline", "assets/img/img_play_offline.png")),
-                          const SizedBox(width: 10),
                           Expanded(child: _buildGameCard(context, "Play Online", "assets/img/img_play_online.png")),
                         ],
                       ),
@@ -93,35 +74,40 @@ class HomeScreen extends StatelessWidget {
 
   Widget _buildGameCard(BuildContext context, String title, String imagePath) {
     return Container(
-      height: 250,
+      height: 280,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        image: DecorationImage(
-          image: AssetImage(imagePath),
-          scale: .8,
-          fit: BoxFit.cover,
-        ),
+        color: Colors.white30,
+        borderRadius: BorderRadius.circular(10)
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          spacing: 20,
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
+            Container(
+              // height 70% of the card
+              height: 150,
+              padding: EdgeInsets.all(30),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(imagePath),
+                  scale: 0.7,
+                  fit: BoxFit.contain,
+                ),
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+            FilledButton.icon(
+              style: FilledButton.styleFrom(
                 backgroundColor: Colors.deepPurple,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
-              onPressed: () {
-                if (title == "Play Offline") {
-                  _showPlayOfflinePopup(context); // Show the pop-up
-                } else if (title == "Play Online") {
-                  _showPlayOfflinePopup(context); // Replace
-                }
+              onPressed: () { // Play Game offline Setup
               },
               label: Text(title,
                   style: const TextStyle(
@@ -132,7 +118,6 @@ class HomeScreen extends StatelessWidget {
               icon: const Icon(Icons.videogame_asset_outlined,
                   color: Colors.white, size: 24),
             ),
-            const SizedBox(height: 5)
           ],
         ),
       ),
@@ -140,16 +125,4 @@ class HomeScreen extends StatelessWidget {
   }
 
   // Function to show the Play Offline options as a bottom sheet
-  void _showPlayOfflinePopup(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: const Color(0xFF3A3861), // Background color of the bottom sheet
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (BuildContext bc) {
-        return const PlayOfflinePopup(); // Use the new widget
-      },
-    );
-  }
 }
