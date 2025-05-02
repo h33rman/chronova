@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import '../models/on_game.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -28,12 +28,7 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Container(
         // Image as background
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/img/chronova_bg.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
+        color: Color(0xFF28264F),
         child: Column( // Use Column to fill the screen
           children: [
             Expanded( // Expanded to take remaining space
@@ -57,8 +52,14 @@ class HomeScreen extends StatelessWidget {
                       Row(
                         spacing: 10,
                         children: [
-                          Expanded(child: _buildGameCard(context, "Play Offline", "assets/img/img_play_offline.png")),
-                          Expanded(child: _buildGameCard(context, "Play Online", "assets/img/img_play_online.png")),
+                          Expanded(child: _buildGameCard(
+                              context,
+                              "Play Online",
+                              "assets/img/chronova_bg.png")),
+                          Expanded(child: _buildGameCard(
+                              context,
+                              "Play Offline",
+                              "assets/img/chronova_bg.png")),
                         ],
                       ),
                     ],
@@ -72,36 +73,29 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildGameCard(BuildContext context, String title, String imagePath) {
+  Widget _buildGameCard(
+      BuildContext context,
+      String title,
+      String imagePath)
+  {
     return Container(
       height: 280,
       decoration: BoxDecoration(
-        color: Colors.white30,
-        borderRadius: BorderRadius.circular(10)
+        borderRadius: BorderRadius.circular(10),
+        image: DecorationImage(
+            image: AssetImage(imagePath),
+        fit: BoxFit.cover)
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          spacing: 20,
+          spacing: 10,
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
-              // height 70% of the card
-              height: 150,
-              padding: EdgeInsets.all(30),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(imagePath),
-                  scale: 0.7,
-                  fit: BoxFit.contain,
-                ),
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
             FilledButton.icon(
               style: FilledButton.styleFrom(
-                backgroundColor: Colors.deepPurple,
+                backgroundColor: Colors.deepPurple[700],
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -118,6 +112,7 @@ class HomeScreen extends StatelessWidget {
               icon: const Icon(Icons.videogame_asset_outlined,
                   color: Colors.white, size: 24),
             ),
+            const SizedBox(height: 10),
           ],
         ),
       ),
