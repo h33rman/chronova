@@ -1,17 +1,17 @@
-import 'package:chronova_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:chronova_app/config/app_router.dart';
 
 void main() {
-  runApp(const ChronovApp());
+  runApp(const MyApp());
 }
 
-class ChronovApp extends StatelessWidget {
-  const ChronovApp({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: LoginScreen(), // Use BottomBarMenu as the main screen
+    return MaterialApp.router(
+      routerConfig: appRouter
     );
   }
 }

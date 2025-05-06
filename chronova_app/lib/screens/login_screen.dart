@@ -1,5 +1,6 @@
-import 'package:chronova_app/widgets/home_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:chronova_app/config/app_router.dart';
+
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -92,10 +93,7 @@ class LoginScreen extends StatelessWidget {
                 child: FilledButton(
                   onPressed: () {
                     // Implement login logic
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const BottomBarMenu()), // Replace with your home screen
-                    );
+                    appRouter.go("/");
                   },
                   style: FilledButton.styleFrom(
                     backgroundColor: Colors.deepPurpleAccent,
@@ -121,6 +119,7 @@ class LoginScreen extends StatelessWidget {
                 width: double.infinity,
                 child: FilledButton(
                   onPressed: () {
+                    appRouter.go('/');
                     // Implement create account navigation
                   },
                   style: FilledButton.styleFrom(

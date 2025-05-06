@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../models/on_game.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -53,13 +52,18 @@ class HomeScreen extends StatelessWidget {
                         spacing: 10,
                         children: [
                           Expanded(child: _buildGameCard(
-                              context,
-                              "Play Online",
-                              "assets/img/chronova_bg.png")),
+                            context,
+                            "Play Online",
+                            "assets/img/chronova_bg.png",
+                            "/online",
+                          ),
+                          ),
                           Expanded(child: _buildGameCard(
                               context,
                               "Play Offline",
-                              "assets/img/chronova_bg.png")),
+                              "assets/img/chronova_bg.png",
+                              "/offline",)
+                          ),
                         ],
                       ),
                     ],
@@ -76,7 +80,8 @@ class HomeScreen extends StatelessWidget {
   Widget _buildGameCard(
       BuildContext context,
       String title,
-      String imagePath)
+      String imagePath,
+      String routePath)
   {
     return Container(
       height: 280,
@@ -101,7 +106,8 @@ class HomeScreen extends StatelessWidget {
                 ),
                 padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               ),
-              onPressed: () { // Play Game offline Setup
+              onPressed: () {
+                context.push(routePath);
               },
               label: Text(title,
                   style: const TextStyle(
