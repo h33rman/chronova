@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,45 +25,39 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: Container(
-        // Image as background
-        color: Color(0xFF28264F),
-        child: Column( // Use Column to fill the screen
+        color: const Color(0xFF28264F),
+        child: Column(
           children: [
-            Expanded( // Expanded to take remaining space
+            Expanded(
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center, // Center items horizontally
                     children: [
                       const SizedBox(height: 30),
-                      Container(
-                        alignment: Alignment.center,
-                        child: Center(
-                          child: Text("Game Mode", style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                            letterSpacing: 2
-                          ),)),),
+                      const Text(
+                        "Game Mode",
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          letterSpacing: 2,
+                        ),
+                      ),
                       const SizedBox(height: 20),
-                      Row(
-                        spacing: 10,
-                        children: [
-                          Expanded(child: _buildGameCard(
-                            context,
-                            "Play Online",
-                            "assets/img/chronova_bg.png",
-                            "/online",
-                          ),
-                          ),
-                          Expanded(child: _buildGameCard(
-                              context,
-                              "Play Offline",
-                              "assets/img/chronova_bg.png",
-                              "/offline",)
-                          ),
-                        ],
+                      _buildGameCard(
+                        context,
+                        "Play Online",
+                        "assets/img/chronova_bg.png",
+                        "/online",
+                      ),
+                      const SizedBox(height: 10), // Add spacing between rows
+                      _buildGameCard(
+                        context,
+                        "Play Offline",
+                        "assets/img/chronova_bg.png",
+                        "/offline",
                       ),
                     ],
                   ),
@@ -81,49 +74,52 @@ class HomeScreen extends StatelessWidget {
       BuildContext context,
       String title,
       String imagePath,
-      String routePath)
-  {
-    return Container(
-      height: 280,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        image: DecorationImage(
+      String routePath,
+      ) {
+    return SizedBox( // Use SizedBox to control the width of each card
+      width: double.infinity, // Make each card take the full width
+      height: 200, // Adjust the height as needed
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          image: DecorationImage(
             image: AssetImage(imagePath),
-        fit: BoxFit.cover)
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          spacing: 10,
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            FilledButton.icon(
-              style: FilledButton.styleFrom(
-                backgroundColor: Colors.deepPurple[700],
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+            fit: BoxFit.cover,
+            alignment: Alignment.topCenter
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            spacing: 20,
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              FilledButton.icon(
+                style: FilledButton.styleFrom(
+                  backgroundColor: Colors.deepPurple[700],
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  padding:
+                  const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              ),
-              onPressed: () {
-                context.push(routePath);
-              },
-              label: Text(title,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      letterSpacing: 1.2,
-                      fontWeight: FontWeight.bold)),
-              icon: const Icon(Icons.videogame_asset_outlined,
-                  color: Colors.white, size: 24),
-            ),
-            const SizedBox(height: 10),
-          ],
+                onPressed: () {
+                  context.push(routePath);
+                },
+                label: Text(title,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16, // Adjust font size for better readability in rows
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.bold)),
+                icon: const Icon(Icons.videogame_asset_outlined,
+                    color: Colors.white, size: 24),
+              )
+            ],
+          ),
         ),
       ),
     );
   }
-
-  // Function to show the Play Offline options as a bottom sheet
 }

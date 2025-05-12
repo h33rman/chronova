@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
-class OnlineSetup extends StatefulWidget {
-  const OnlineSetup({super.key});
+class OfflineSetupScreen extends StatefulWidget {
+  const OfflineSetupScreen({super.key});
 
   @override
-  State<OnlineSetup> createState() => _OnlineSetupState();
+  State<OfflineSetupScreen> createState() => _OfflineSetupScreenState();
 }
 
-class _OnlineSetupState extends State<OnlineSetup> {
+class _OfflineSetupScreenState extends State<OfflineSetupScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold();
   }
 }

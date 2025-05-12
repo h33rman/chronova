@@ -9,53 +9,29 @@ import 'package:chronova_app/screens/notification_screen.dart';
 import 'package:chronova_app/screens/ranking_screen.dart';
 
 import '../screens/offline/offline_setup.dart';
-import '../screens/online/offline_setup.dart';
-
-
-Future <bool> isUserLoggedIn() async {
-  // Simulate a network call to check if the user is logged in
-  await Future.delayed(const Duration(milliseconds: 500));
-  return false; // Change this to true if the user is logged in
-}
+import '../screens/online/online_setup.dart';
+import '../widgets/home_bar.dart';
 
 
 // GoRouter configuration
 final GoRouter appRouter = GoRouter(
-  initialLocation: '/', // Start at the root home
-
-  redirect: (context, state) async {
-    final loggedIn = await isUserLoggedIn();
-    final goingToLogin = state.matchedLocation == '/login';
-
-    // If not logged in and not going to the login page, redirect to login
-    if (!loggedIn && !goingToLogin) {
-      return '/login';
-    }
-
-    // If logged in and going to the login page, redirect to home
-    if (loggedIn && goingToLogin) {
-      return '/';
-    }
-
-    // No redirect needed
-    return null;
-  },
+  initialLocation: '/login', // Set login as the default landing page
   routes: <RouteBase>[
     GoRoute(
-      path: '/',
-      builder: (BuildContext context, GoRouterState state) => const HomeScreen(),
-    ),
-    GoRoute(
-      path: '/offline',
-      builder: (BuildContext context, GoRouterState state) => const OfflineSetup(),
+      path: '/', // Navigation between screen
+      builder: (BuildContext context, GoRouterState state) => const BottomBarMenu(),
     ),
     GoRoute(
       path: '/online',
-      builder: (BuildContext context, GoRouterState state) => const OnlineSetup(),
+      builder: (BuildContext context, GoRouterState state) => const OnlineSetupScreen(),
     ),
     GoRoute(
-        path: '/login',
-        builder: (BuildContext context, GoRouterState state) => const LoginScreen()
-    )
+      path: '/offline',
+      builder: (BuildContext context, GoRouterState state) => const OfflineSetupScreen(),
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (BuildContext context, GoRouterState state) => const LoginScreen(),
+    ),
   ],
 );
