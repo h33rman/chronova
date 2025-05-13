@@ -33,6 +33,7 @@ class HomeScreen extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(
+                    spacing: 20,
                     crossAxisAlignment: CrossAxisAlignment.center, // Center items horizontally
                     children: [
                       const SizedBox(height: 30),
@@ -45,14 +46,13 @@ class HomeScreen extends StatelessWidget {
                           letterSpacing: 2,
                         ),
                       ),
-                      const SizedBox(height: 20),
                       _buildGameCard(
                         context,
                         "Play Online",
                         "assets/img/chronova_bg.png",
                         "/online",
                       ),
-                      const SizedBox(height: 10), // Add spacing between rows
+                      // Add spacing between rows
                       _buildGameCard(
                         context,
                         "Play Offline",

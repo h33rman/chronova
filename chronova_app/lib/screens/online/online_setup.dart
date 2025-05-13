@@ -49,10 +49,11 @@ class _OnlineSetupScreenState extends State<OnlineSetupScreen> {
       backgroundColor: const Color(0xFF28264F),
       body: Padding(
         padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 16),
-        child: Column(
-          children: [
-            // Section: Create Room
-             Container(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Section: Create Room
+              Container(
                 padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
                 decoration: BoxDecoration(
                   color: const Color(0xFF3A3861),
@@ -80,11 +81,23 @@ class _OnlineSetupScreenState extends State<OnlineSetupScreen> {
                       decoration: InputDecoration(
                         hintText: 'Passcode',
                         hintStyle: const TextStyle(color: Colors.grey),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide:  BorderSide(color: Colors.grey.shade400), // Set the default border color
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(color: Colors.grey.shade400), // Set the border color when enabled but not focused
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(color: Colors.blueAccent), // Example: Blue when focused
+                        ),
                         filled: true,
                         fillColor: const Color(0xFF47457A),
                       ),
                     ),
+
                     ElevatedButton(
                       onPressed: _createRoom,
                       style: ElevatedButton.styleFrom(
@@ -98,10 +111,10 @@ class _OnlineSetupScreenState extends State<OnlineSetupScreen> {
                   ],
                 ),
               ),
-            const SizedBox(height: 30),
+              const SizedBox(height: 30),
 
-            // Section: Join Room
-            Container(
+              // Section: Join Room
+              Container(
                 padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 20),
                 decoration: BoxDecoration(
                   color: const Color(0xFF3A3861),
@@ -122,17 +135,29 @@ class _OnlineSetupScreenState extends State<OnlineSetupScreen> {
                       ),
                     ),
                     TextField(
-                      controller: _joinRoomCodeController,
+                      controller: _createPasscodeController,
                       style: const TextStyle(color: Colors.white),
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
                         hintText: 'Room Code',
                         hintStyle: const TextStyle(color: Colors.grey),
-                        border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide:  BorderSide(color: Colors.grey.shade400), // Set the default border color
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: BorderSide(color: Colors.grey.shade400), // Set the border color when enabled but not focused
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(8),
+                          borderSide: const BorderSide(color: Colors.blueAccent), // Example: Blue when focused
+                        ),
                         filled: true,
                         fillColor: const Color(0xFF47457A),
                       ),
                     ),
+
                     ElevatedButton(
                       onPressed: _joinRoom,
                       style: ElevatedButton.styleFrom(
@@ -146,7 +171,8 @@ class _OnlineSetupScreenState extends State<OnlineSetupScreen> {
                   ],
                 ),
               ),
-          ],
+            ],
+          ),
         ),
       ),
     );
