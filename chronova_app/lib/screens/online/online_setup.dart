@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class OnlineSetupScreen extends StatefulWidget {
   const OnlineSetupScreen({super.key});
@@ -15,6 +16,8 @@ class _OnlineSetupScreenState extends State<OnlineSetupScreen> {
     final passcode = _createPasscodeController.text.trim();
     if (passcode.isNotEmpty) {
       // Logic to create a new room with the passcode
+      context.push('/online_lobby', extra: passcode);
+
       print('Creating room with passcode: $passcode');
       // After successful creation, navigate to the room
     } else {
@@ -135,7 +138,7 @@ class _OnlineSetupScreenState extends State<OnlineSetupScreen> {
                       ),
                     ),
                     TextField(
-                      controller: _createPasscodeController,
+                      controller: _joinRoomCodeController,
                       style: const TextStyle(color: Colors.white),
                       textAlign: TextAlign.center,
                       decoration: InputDecoration(
