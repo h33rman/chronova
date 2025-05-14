@@ -7,11 +7,13 @@ import 'package:chronova_app/screens/login_screen.dart';
 import 'package:chronova_app/screens/news_screen.dart';
 import 'package:chronova_app/screens/notification_screen.dart';
 import 'package:chronova_app/screens/ranking_screen.dart';
-
 import '../screens/offline/offline_setup.dart';
 import '../screens/online/online_lobby.dart';
 import '../screens/online/online_setup.dart';
+import '../screens/online/on_game.dart';
+
 import '../widgets/home_bar.dart';
+
 
 
 // GoRouter configuration
@@ -28,7 +30,13 @@ final GoRouter appRouter = GoRouter(
     ),
     GoRoute(
         path: "/online_lobby",
-        builder: (BuildContext context, GoRouterState state) => const LobbyScreen()
+        builder: (BuildContext context, GoRouterState state) => const LobbyScreen(),
+        routes: <RouteBase>[
+          GoRoute(
+            path: '/on_game',
+            builder: (BuildContext context, GoRouterState state) => const GamingScreen(),
+          )
+          ]
     ),
 
     GoRoute(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:chronova_app/widgets/player_list_item.dart'; // Import the PlayerListItem widget
+import 'package:chronova_app/widgets/player_list_item.dart';
+import 'package:go_router/go_router.dart'; // Import the PlayerListItem widget
 
 class LobbyScreen extends StatefulWidget {
   const LobbyScreen({super.key});
@@ -50,6 +51,7 @@ class _LobbyScreenState extends State<LobbyScreen> {
     if (_isHost) {
       print('Starting game...');
       // Navigate to game screen
+      context.push('/online_lobby/on_game');
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Only the host can start the game.')),
