@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "735372641409",
+    "firebase_url": "https://chronova-back-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "chronova-back",
+    "storage_bucket": "chronova-back.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:735372641409:android:92efded99f010bdb4ff980",
+        "android_client_info": {
+          "package_name": "com.example.chronova_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "735372641409-s38mcial6jksh609diipeas7g7frmca0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYFzQcCzPdsRO1VN9xkaZyRj6EMweY7P8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "735372641409-s38mcial6jksh609diipeas7g7frmca0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "735372641409-g391n60f1lrnlc9v6457h5v2q0r61k7n.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.chronovaApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
