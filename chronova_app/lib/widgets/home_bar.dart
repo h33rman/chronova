@@ -12,9 +12,9 @@ class BottomBarMenu extends StatefulWidget {
 }
 
 class _BottomBarMenuState extends State<BottomBarMenu> {
-  int index = 0;
+  int _selectedIndex = 0;
 
-  final List<Widget> screens = const [
+  final List<Widget> _screens = const [
     HomeScreen(),
     NewsScreen(),
     NotificationScreen(),
@@ -23,60 +23,50 @@ class _BottomBarMenuState extends State<BottomBarMenu> {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      body: screens[index], // Display the selected screen
+      body: _screens[_selectedIndex],
       bottomNavigationBar: NavigationBarTheme(
         data: NavigationBarThemeData(
           indicatorColor: Colors.transparent,
-          labelTextStyle: const WidgetStatePropertyAll(
-            TextStyle(fontSize: 12, color: Colors.white),
+          labelTextStyle: WidgetStatePropertyAll(
+            TextStyle(fontSize: 12, color: colorScheme.onSurface),
           ),
         ),
         child: NavigationBar(
           height: 80,
-          backgroundColor: const Color(0xFF222142),
-          onDestinationSelected: (newIndex) {
-            setState(() => index = newIndex);
+          backgroundColor: colorScheme.surface,
+          selectedIndex: _selectedIndex,
+          onDestinationSelected: (index) {
+            setState(() => _selectedIndex = index);
           },
           labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-          animationDuration: const Duration(seconds: 1),
-          selectedIndex: index,
+          animationDuration: const Duration(milliseconds: 400),
           destinations: [
-            _buildNavigationItem(
-              icon: Icons.sports_esports_outlined,
-              selectedIcon: Icons.sports_esports,
+            NavigationDestination(
+              icon: Icon(Icons.sports_esports_outlined, color: colorScheme.primary, size: 40),
+              selectedIcon: Icon(Icons.sports_esports, color: colorScheme.secondary, size: 40),
               label: "Home",
             ),
-            _buildNavigationItem(
-              icon: Icons.rocket_outlined,
-              selectedIcon: Icons.rocket_sharp,
+            NavigationDestination(
+              icon: Icon(Icons.rocket_outlined, color: colorScheme.primary, size: 40),
+              selectedIcon: Icon(Icons.rocket_sharp, color: colorScheme.secondary, size: 40),
               label: "News",
             ),
-            _buildNavigationItem(
-              icon: Icons.notifications_outlined,
-              selectedIcon: Icons.notifications,
+            NavigationDestination(
+              icon: Icon(Icons.notifications_outlined, color: colorScheme.primary, size: 40),
+              selectedIcon: Icon(Icons.notifications, color: colorScheme.secondary, size: 40),
               label: "Notification",
             ),
-            _buildNavigationItem(
-              icon: Icons.emoji_events_outlined,
-              selectedIcon: Icons.emoji_events,
+            NavigationDestination(
+              icon: Icon(Icons.emoji_events_outlined, color: colorScheme.primary, size: 40),
+              selectedIcon: Icon(Icons.emoji_events, color: colorScheme.secondary, size: 40),
               label: "Ranking",
             ),
           ],
         ),
       ),
-    );
-  }
-
-  NavigationDestination _buildNavigationItem({
-    required IconData icon,
-    required IconData selectedIcon,
-    required String label,
-  }) {
-    return NavigationDestination(
-      icon: Icon(icon, color: Colors.deepPurple, size: 40),
-      selectedIcon: Icon(selectedIcon, color: Colors.deepPurpleAccent, size: 40),
-      label: label,
     );
   }
 }

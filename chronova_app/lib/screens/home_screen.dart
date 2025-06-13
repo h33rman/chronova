@@ -1,102 +1,125 @@
-// File: lib/screens/online/home_screen.dart
-
+// File: lib/screens/home_screen.dart (or wherever you want the switch)
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:chronova_app/services/auth_service.dart'; // NEW: Import AuthService
+import 'package:chronova_app/services/auth_service.dart';
+import 'package:provider/provider.dart';
+import 'package:chronova_app/providers/theme_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // NEW: Get the current user from the auth service
     final user = authService.value.currentUser;
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final colorScheme = Theme.of(context).colorScheme;
+    final isDarkMode = themeProvider.themeMode == ThemeMode.dark;
 
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 100,
-        backgroundColor: const Color(0xFF222142),
+        backgroundColor: colorScheme.surface,
         title: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text("Welcome!", style: TextStyle(color: Colors.white)),
-            // NEW: Display the user's name or email if available
+            Text("Welcome!", style: TextStyle(color: colorScheme.onSurface)),
             Text(
               user?.displayName ?? user?.email ?? "User",
-              style: const TextStyle(color: Colors.white70, fontSize: 14),
+              style: TextStyle(
+                color: colorScheme.onSurface.withOpacity(0.7),
+                fontSize: 14,
+              ),
             ),
           ],
         ),
         actions: [
-          // NEW: Add a logout button
+          Tooltip(
+            message: "Toggle Theme",
+            child: Switch(
+              value: isDarkMode,
+              onChanged: (value) {
+                themeProvider.setThemeMode(value ? ThemeMode.dark : ThemeMode.light);
+              },
+              activeColor: colorScheme.primary,
+              inactiveThumbColor: colorScheme.outline,
+            ),
+          ),
+          const SizedBox(width: 10),
           IconButton(
-            icon: const Icon(Icons.logout, color: Colors.white, size: 30),
+            icon: Icon(Icons.logout, color: colorScheme.onSurface, size: 30),
             tooltip: 'Logout',
             onPressed: () async {
-              // Simply call signOut. The AuthGate will do the rest!
               await authService.value.signOut();
             },
           ),
-          const SizedBox(width: 10), // Add some spacing
+          const SizedBox(width: 10),
         ],
       ),
       body: Container(
-        color: const Color(0xFF28264F),
+        color: colorScheme.surface,
         child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                const SizedBox(height: 30),
-                const Text(
-                  "Game Mode",
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 2,
-                  ),
-                ),
-                const SizedBox(height: 20), // FIX: Use SizedBox for spacing
-                _buildGameCard(
-                  context,
-                  "Play Online",
-                  "assets/img/chronova_bg.png",
-                  "/online",
-                ),
-                const SizedBox(height: 20), // FIX: Use SizedBox for spacing
-                _buildGameCard(
-                  context,
-                  "Play Offline",
-                  "assets/img/chronova_bg.png",
-                  "/offline",
-                ),
-              ],
-            ),
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              HomeCard(
+                title: "Play Online",
+                imagePath: "assets/img/chronova_bg.png",
+                routePath: "/online",
+                backgroundColor: colorScheme.surfaceContainerHighest ?? colorScheme.surface,
+                buttonColor: colorScheme.primary,
+                textColor: colorScheme.onPrimary,
+              ),
+              const SizedBox(height: 20),
+              HomeCard(
+                title: "Play Offline",
+                imagePath: "assets/img/chronova_bg.png",
+                routePath: "/offline",
+                backgroundColor: colorScheme.surfaceContainerHighest ?? colorScheme.surface,
+                buttonColor: colorScheme.primary,
+                textColor: colorScheme.onPrimary,
+              ),
+              const SizedBox(height: 20),
+            ],
           ),
         ),
       ),
     );
   }
+}
 
-  Widget _buildGameCard(
-      BuildContext context,
-      String title,
-      String imagePath,
-      String routePath,
-      ) {
-    // ... no changes needed in this helper method ...
+class HomeCard extends StatelessWidget {
+  final String title;
+  final String imagePath;
+  final String routePath;
+  final Color backgroundColor;
+  final Color buttonColor;
+  final Color textColor;
+
+  const HomeCard({
+    super.key,
+    required this.title,
+    required this.imagePath,
+    required this.routePath,
+    required this.backgroundColor,
+    required this.buttonColor,
+    required this.textColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       height: 200,
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
+          color: backgroundColor,
           image: DecorationImage(
-              image: AssetImage(imagePath),
-              fit: BoxFit.cover,
-              alignment: Alignment.topCenter),
+            image: AssetImage(imagePath),
+            fit: BoxFit.cover,
+            alignment: Alignment.topCenter,
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -106,25 +129,27 @@ class HomeScreen extends StatelessWidget {
             children: [
               FilledButton.icon(
                 style: FilledButton.styleFrom(
-                  backgroundColor: Colors.deepPurple[700],
+                  backgroundColor: buttonColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  padding:
-                  const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  foregroundColor: textColor,
                 ),
                 onPressed: () {
                   context.push(routePath);
                 },
-                label: Text(title,
-                    style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                        letterSpacing: 1.2,
-                        fontWeight: FontWeight.bold)),
-                icon: const Icon(Icons.videogame_asset_outlined,
-                    color: Colors.white, size: 24),
-              )
+                label: Text(
+                  title,
+                  style: TextStyle(
+                    color: textColor,
+                    fontSize: 16,
+                    letterSpacing: 1.2,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                icon: Icon(Icons.videogame_asset_outlined, color: textColor, size: 24),
+              ),
             ],
           ),
         ),
