@@ -1,51 +1,65 @@
+// File: lib/config/app_router.dart
+
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
-
-// Screens Home
+import 'package:chronova_app/services/auth_gate.dart';
 import 'package:chronova_app/screens/home_screen.dart';
-import 'package:chronova_app/screens/login_screen.dart';
-import 'package:chronova_app/screens/news_screen.dart';
-import 'package:chronova_app/screens/notification_screen.dart';
-import 'package:chronova_app/screens/ranking_screen.dart';
-import '../screens/offline/offline_setup.dart';
-import '../screens/online/online_lobby.dart';
-import '../screens/online/online_setup.dart';
-import '../screens/online/on_game.dart';
 
-import '../widgets/home_bar.dart';
-
-
+// Import your other screens
+import 'package:chronova_app/screens/registration_screen.dart';
+import '../screens/login_screen.dart';
+import '../screens/onboarding_screen.dart';
+import '../screens/profile_screen.dart';
 
 // GoRouter configuration
 final GoRouter appRouter = GoRouter(
-  initialLocation: '/login', // Set login as the default landing page
+  // UPDATED: The app will now start at the home screen.
+  initialLocation: '/home',
   routes: <RouteBase>[
+    // This route is no longer the initial route but can be used for other auth-related logic.
     GoRoute(
-      path: '/', // Navigation between screen
-      builder: (BuildContext context, GoRouterState state) => const BottomBarMenu(),
-    ),
-    GoRoute(
-      path: '/online',
-      builder: (BuildContext context, GoRouterState state) => const OnlineSetupScreen(),
-    ),
-    GoRoute(
-        path: "/online_lobby",
-        builder: (BuildContext context, GoRouterState state) => const LobbyScreen(),
-        routes: <RouteBase>[
-          GoRoute(
-            path: '/on_game',
-            builder: (BuildContext context, GoRouterState state) => const GamingScreen(),
-          )
-          ]
+      path: '/',
+      builder: (BuildContext context, GoRouterState state) => const AuthGate(),
     ),
 
+    // Home Screen route
     GoRoute(
-      path: '/offline',
-      builder: (BuildContext context, GoRouterState state) => const OfflineSetupScreen(),
+        path: '/home',
+        builder: (BuildContext context, GoRouterState state) => const HomeScreen()
+    ),
+
+    // Profile route
+    GoRoute(
+        path: '/profile',
+        pageBuilder: (context, state) => CustomTransitionPage(
+          child: const ProfileScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            const begin = Offset(0.0, 1.0); // Slide from bottom
+            const end = Offset.zero;
+            const curve = Curves.ease;
+            final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+          },
+        )
+    ),
+
+    // Registration and Login routes
+    GoRoute(
+      path: '/register',
+      builder: (BuildContext context, GoRouterState state) => const RegistrationScreen(),
     ),
     GoRoute(
-      path: '/login',
-      builder: (BuildContext context, GoRouterState state) => const LoginScreen(),
+        path: '/login',
+        builder: (BuildContext context, GoRouterState state) => const LoginScreen()
     ),
+
+    // Onboarding route
+    GoRoute(
+        path: '/welcome',
+        builder: (BuildContext context, GoRouterState state) => const OnboardingScreen()
+    )
   ],
 );
