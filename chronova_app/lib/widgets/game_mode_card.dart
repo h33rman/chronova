@@ -25,6 +25,8 @@ class GameModeCard extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
 
     return Container(
+      // Set the height dynamically based on the image aspect ratio
+      width: MediaQuery.of(context).size.width * 0.9,
       margin: const EdgeInsets.symmetric(horizontal: 8.0),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(24.0),

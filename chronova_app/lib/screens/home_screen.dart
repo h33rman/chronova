@@ -5,7 +5,6 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:chronova_app/services/auth_service.dart';
-import 'package:chronova_app/providers/theme_provider.dart';
 import 'package:chronova_app/widgets/daily_challenge_card.dart';
 import 'package:chronova_app/widgets/game_mode_card.dart';
 
@@ -25,25 +24,28 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  // Mock data for game modes with specific colors
+  // UPDATED: Added a 'route' key to each map to handle navigation.
   final List<Map<String, dynamic>> gameModes = [
     {
       "title": "ONLINE ROOM",
       "description": "Challenge friends & conquer global leaderboards.",
       "imagePath": "assets/images/hm_online_mode.png",
       "color": const Color(0xFF6E5DE7),
+      "route": "/online_lobby", // Route for this card
     },
     {
       "title": "SOLO QUEST",
       "description": "Journey through the cosmos and test your knowledge.",
       "imagePath": "assets/images/hm_local_mode.png",
       "color": const Color(0xFFE75D84),
+      "route": "/home", // Placeholder route
     },
     {
       "title": "GALAXY SURVIVAL",
       "description": "Survive an onslaught of astronomical questions.",
       "imagePath": "assets/images/hm_survey_mode.png",
       "color": const Color(0xFF5D98E7),
+      "route": "/home", // Placeholder route
     }
   ];
 
@@ -52,20 +54,18 @@ class _HomeScreenState extends State<HomeScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    // UPDATED: Wrap the UI in a ValueListenableBuilder to react to auth changes.
     return ValueListenableBuilder<AuthService>(
       valueListenable: authService,
       builder: (context, auth, child) {
         final user = auth.currentUser;
 
-        // Determine the correct image provider for the avatar
         final ImageProvider avatarImage;
         if (user != null) {
           avatarImage = (user.photoURL != null)
               ? NetworkImage(user.photoURL!)
               : const AssetImage('assets/images/default_avatar.png');
         } else {
-          avatarImage = const AssetImage('assets/images/default_avatar_no_account.png');
+          avatarImage = const AssetImage('assets/images/default_avatar.png');
         }
 
         return Scaffold(
@@ -77,7 +77,6 @@ class _HomeScreenState extends State<HomeScreen> {
             leadingWidth: 80,
             leading: Padding(
               padding: const EdgeInsets.only(left: 20.0),
-              // UPDATED: GestureDetector now wraps the avatar and navigates to the profile.
               child: GestureDetector(
                 onTap: () => context.push('/profile'),
                 child: CircleAvatar(
@@ -125,8 +124,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               const SizedBox(height: 30),
               SizedBox(
-                // Height is 40% of the screen height
-                height: MediaQuery.of(context).size.height * 0.5,
+                //Make the height and width of the PageView dynamic based on the screen size
+                height: MediaQuery.of(context).size.height * 0.50,
+                width: MediaQuery.of(context).size.width * 0.90,
                 child: PageView.builder(
                   controller: _pageController,
                   itemCount: gameModes.length,
@@ -137,7 +137,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       description: mode['description']!,
                       imagePath: mode['imagePath']!,
                       backgroundColor: mode['color']!,
-                      onStart: () {},
+                      // UPDATED: The onStart function now uses the 'route' from the map.
+                      onStart: () {
+                        if (mode['route'] != null) {
+                          context.push(mode['route']);
+                        }
+                      },
                     );
                   },
                 ),

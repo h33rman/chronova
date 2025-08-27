@@ -1,5 +1,3 @@
-// File: lib/screens/profile_screen.dart
-
 import 'package:chronova_app/config/app_router.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +9,6 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // We are now using a Column-based layout instead of a CustomScrollView
-    // to precisely match the positioning from your example.
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       body: Column(
@@ -28,7 +24,6 @@ class ProfileScreen extends StatelessWidget {
   }
 }
 
-/// Top portion of the screen with the cover photo, app bar icons, and profile avatar.
 class _TopPortion extends StatelessWidget {
   const _TopPortion();
 
@@ -47,7 +42,6 @@ class _TopPortion extends StatelessWidget {
     return Stack(
       fit: StackFit.expand,
       children: [
-        // Background Image Container
         Container(
           margin: const EdgeInsets.only(bottom: 50),
           decoration: BoxDecoration(
@@ -59,45 +53,58 @@ class _TopPortion extends StatelessWidget {
               bottomLeft: Radius.circular(50),
               bottomRight: Radius.circular(50),
             ),
-            color: colorScheme.primary, // Fallback color
+            color: colorScheme.primary,
           ),
         ),
-        // App Bar Icons
         Positioned(
-          top: 40.0,
+          top: 60.0,
           left: 20.0,
           right: 20.0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CircleAvatar(
-                backgroundColor: Colors.black.withValues(alpha: 0.2),
+                radius: 28,
+                backgroundColor: colorScheme.onPrimaryContainer,
                 child: IconButton(
-                  icon: const Icon(Icons.arrow_back, color: Colors.white),
+                  icon: Icon(Icons.arrow_back_sharp, color: colorScheme.primaryContainer, size: 28),
                   onPressed: () => Navigator.of(context).pop(),
                   tooltip: 'Back',
                 ),
               ),
               Row(
                 children: [
-                  CircleAvatar(
-                    backgroundColor: Colors.black.withValues(alpha: 0.2),
-                    child: IconButton(
-                      icon: Icon(themeProvider.themeMode == ThemeMode.dark ? Icons.light_mode_outlined : Icons.dark_mode_rounded),
-                      color: Colors.white,
-                      onPressed: () {
-                        final newMode = themeProvider.themeMode == ThemeMode.dark ? ThemeMode.light : ThemeMode.dark;
-                        themeProvider.setThemeMode(newMode);
-                      },
-                      tooltip: 'Toggle Theme',
-                    ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(56),
+                    child: Container(
+                      width: 84,
+                      height: 56,
+                      color: colorScheme.onPrimaryContainer,
+                      child: IconButton(
+                        icon: Icon(
+                          themeProvider.themeMode == ThemeMode.dark
+                              ? Icons.light_mode
+                              : Icons.dark_mode_rounded,
+                          color: colorScheme.primaryContainer,
+                          size: 28,
+                        ),
+                        onPressed: () {
+                          final newMode = themeProvider.themeMode == ThemeMode.dark
+                              ? ThemeMode.light
+                              : ThemeMode.dark;
+                          themeProvider.setThemeMode(newMode);
+                        },
+                        tooltip: 'Toggle Theme',
+                      ),
+                    )
                   ),
                   const SizedBox(width: 8),
                   CircleAvatar(
-                    backgroundColor: Colors.black.withValues(alpha: 0.2),
+                    radius: 28,
+                    backgroundColor: colorScheme.onPrimaryContainer,
                     child: PopupMenuButton<String>(
                       onSelected: handleSettingsSelection,
-                      icon: const Icon(Icons.settings, color: Colors.white),
+                      icon: Icon(Icons.settings, color: colorScheme.primaryContainer, size: 28),
                       tooltip: 'Settings',
                       itemBuilder: (BuildContext context) => [
                         const PopupMenuItem<String>(value: 'logout', child: Text('Logout')),
@@ -109,7 +116,6 @@ class _TopPortion extends StatelessWidget {
             ],
           ),
         ),
-        // Profile Avatar, aligned to the bottom center of the Stack
         Align(
           alignment: Alignment.bottomCenter,
           child: CircleAvatar(
@@ -128,11 +134,9 @@ class _TopPortion extends StatelessWidget {
   }
 }
 
-/// Bottom portion of the screen with user info, stats, and friends list.
 class _BottomPortion extends StatelessWidget {
   _BottomPortion();
 
-  // Mock data for friends list
   final List<Map<String, String>> friends = [
     {"name": "Glactikos", "handle": "@galaktikos", "points": "1089", "avatar": "N"},
     {"name": "H33dev", "handle": "@h33.dev", "points": "1089", "avatar": "R"},
@@ -230,7 +234,7 @@ class _BottomPortion extends StatelessWidget {
           icon: const Icon(Icons.flash_on, size: 16),
           label: Text(friend['points']!),
           style: FilledButton.styleFrom(
-            backgroundColor: colorScheme.primaryContainer.withValues(alpha: 0.5),
+            backgroundColor: colorScheme.primaryContainer.withAlpha(128),
             foregroundColor: colorScheme.primary,
           ),
         ),

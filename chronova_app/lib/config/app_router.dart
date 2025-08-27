@@ -3,13 +3,14 @@
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:chronova_app/services/auth_gate.dart';
-import 'package:chronova_app/screens/home_screen.dart';
 
 // Import your other screens
+import 'package:chronova_app/screens/home_screen.dart';
 import 'package:chronova_app/screens/registration_screen.dart';
 import '../screens/login_screen.dart';
 import '../screens/onboarding_screen.dart';
 import '../screens/profile_screen.dart';
+import 'package:chronova_app/screens/online_lobby/online_lobby_screen.dart';
 
 // GoRouter configuration
 final GoRouter appRouter = GoRouter(
@@ -23,9 +24,14 @@ final GoRouter appRouter = GoRouter(
     ),
 
     // Home Screen route
+  GoRoute(
+    path: '/home',
+    builder: (BuildContext context, GoRouterState state) => const HomeScreen(),
+  ),
+
     GoRoute(
-        path: '/home',
-        builder: (BuildContext context, GoRouterState state) => const HomeScreen()
+      path: '/online_lobby',
+      builder: (BuildContext context, GoRouterState state) => const OnlineLobbyScreen(),
     ),
 
     // Profile route
